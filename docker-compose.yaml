@@ -1,0 +1,26 @@
+services:
+    app:
+      build: ./docker
+      ports:
+         - 85:80
+      volumes:
+         - "./:/var/www/html/"
+      depends_on:
+          - db
+      networks:
+         - stock-network
+    db:
+      restart: always
+      ports:
+         - 3306:3306
+      image: mysql:5.6
+      environment:
+        MYSQL_USER: retailcrm
+        MYSQL_PASSWORD: retailcrm
+        MYSQL_DATABASE: stocks
+        MYSQL_HOST: mysql
+        MYSQL_ROOT_PASSWORD: root
+      networks:
+         - stock-network
+networks:
+   stock-network:
